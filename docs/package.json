@@ -1,0 +1,14 @@
+{
+  "name": "@fkwechat/plugin-docs",
+  "author": "FkWeChat",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "volta": {
+    "extends": "../package.json"
+  }
+}

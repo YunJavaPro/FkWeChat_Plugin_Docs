@@ -1,0 +1,64 @@
+:root {
+  --vp-c-brand-1: #6366F1;
+  --vp-c-brand-2: #4F46E5;
+  --vp-c-brand-3: #4338CA;
+  --vp-c-brand-soft: rgba(99, 102, 241, 0.12);
+}
+
+.VPNavBarTitle .title {
+  color: var(--vp-c-text-1) !important;
+  font-weight: 600;
+  font-size: 1.2em;
+}
+
+.VPNavBarTitle .logo {
+  opacity: 1;
+}
+
+.VPNavBarMenuLink {
+  color: var(--vp-c-text-1) !important;
+}
+
+.VPNavBarMenuLink:hover,
+.VPNavBarMenuLink.active {
+  color: var(--vp-c-brand-1) !important;
+}
+
+.VPButton.medium.brand {
+  background-color: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-1);
+  color: #fff;
+}
+
+.VPButton.medium.brand:hover {
+  background-color: var(--vp-c-brand-2);
+  border-color: var(--vp-c-brand-2);
+}
+
+.VPOutlineTitle {
+  color: #6366F1;
+}
+
+.sidebar-link.active {
+  color: #6366F1 !important;
+}
+
+.sidebar-link:hover {
+  color: #4F46E5 !important;
+}
+
+.VPLocalSearchBox {
+  --vp-local-search-highlight-text-color: #6366F1;
+}
+
+.VPDocFooter .prev-next {
+  border-top-color: #6366F1;
+}
+
+.vp-doc a {
+  color: #6366F1;
+}
+
+.vp-doc a:hover {
+  color: #4F46E5;
+}

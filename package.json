@@ -1,0 +1,22 @@
+{
+  "name": "FkWeChat_Plugin_Docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "format": "prettier --cache --write --ignore-unknown .",
+    "dev": "pnpm -F @fkwechat/plugin-docs docs:dev",
+    "build": "pnpm -F @fkwechat/plugin-docs docs:build",
+    "preview": "pnpm -F @fkwechat/plugin-docs docs:preview"
+  },
+  "dependencies": {
+    "@types/node": "22.15.3",
+    "prettier": "3.5.3",
+    "typescript": "5.8.3",
+    "vitepress": "2.0.0-alpha.5"
+  },
+  "volta": {
+    "node": "22.15.0",
+    "pnpm": "10.12.1"
+  },
+  "packageManager": "pnpm@10.12.1"
+}
