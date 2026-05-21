@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress';
 
 export default defineConfig({
-  base: '/FkWeChat_Plugin_Docs/',
+  base: '/',
   title: 'FkWeChat 插件开发文档',
   description: 'FkWeChat 插件开发文档',
   head: [
@@ -10,7 +10,7 @@ export default defineConfig({
       {
         rel: 'icon',
         type: 'image/svg+xml',
-        href: '/FkWeChat_Plugin_Docs/icon.svg',
+        href: '/icon.svg',
       },
     ],
   ],
