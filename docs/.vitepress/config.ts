@@ -47,6 +47,7 @@ export default defineConfig({
           { text: '媒体路径', link: '/media-path' },
           { text: '文件工具', link: '/file-utils' },
           { text: '音频转换', link: '/audio-convert' },
+          { text: 'DexKit 查找', link: '/dexkit-api' },
           { text: '其他函数', link: '/other-functions' },
           { text: '回调函数', link: '/callback-functions' },
           { text: 'Msg 结构', link: '/msg-structure' },

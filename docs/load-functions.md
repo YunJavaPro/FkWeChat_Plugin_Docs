@@ -9,6 +9,7 @@
 | `loadJar(String path)` | 加载 Jar 文件（.jar） |
 | `loadJava(String path)` | 加载 Java 脚本文件（.java） |
 | `loadAar(String path)` | 加载 Aar 文件（.aar） |
+| `loadApk(String path)` | 加载 Apk 安装包（.apk） |
 
 ## 使用示例
 
