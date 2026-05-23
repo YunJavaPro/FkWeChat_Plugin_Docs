@@ -69,19 +69,19 @@
 - **返回值**：
   `number`：长整数或默认值
 
-**`contains(String key)`**
+**`configContains(String key)`**
 - **描述**：检查键是否存在
 - **参数**：
   `key` (str)：键名
 - **返回值**：
   `bool`：是否存在
 
-**`remove(String key)`**
+**`configRemove(String key)`**
 - **描述**：删除键值对
 - **参数**：
   `key` (str)：键名
 
-**`clear()`**
+**`configClear()`**
 - **描述**：清空所有存储数据
 
 ## 使用示例
@@ -126,14 +126,14 @@ void onMsg(Object msg) {
 // 管理配置
 void manageConfig() {
     // 检查配置是否存在
-    if (contains("auto_reply")) {
+    if (configContains("auto_reply")) {
         log("配置已存在");
     }
     
     // 删除某个配置
-    remove("temp_config");
+    configRemove("temp_config");
     
     // 清空所有配置
-    // clear(); // 谨慎使用！
+    // configClear(); // 谨慎使用！
 }
 ```

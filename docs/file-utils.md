@@ -1,41 +1,95 @@
 # 文件工具
-**`deleteFile(file)`**
-- **描述**：递归删除文件或整个文件夹目录
-- **参数**：
-  `file` (File)：待删除文件/目录对象
-- **返回值**：
-  `boolean`：成功true，失败false
 
-**`copyDirectory(srcDir, destDir)`**
-- **描述**：递归完整复制整个文件夹及内部所有子文件
-- **参数**：
-  `srcDir` (File)：源文件夹对象
-  `destDir` (File)：目标存放文件夹对象
-- **异常抛出**：IOException 文件读写异常
+插件系统提供了静态全局类 `FileUtils`，帮助您无需处理复杂的流逻辑，一行代码即可实现本地文件与目录的读写、复制、删除等基础 IO 操作。
 
-**`createFile(filePath)`**
-- **描述**：创建空白文件，自动逐级生成父文件夹
-- **参数**：
-  `filePath` (str)：文件本地绝对路径
-- **返回值**：
-  `boolean`：已存在/创建成功返回true
-- **异常抛出**：IOException 文件创建异常
+---
 
-**`copyFile(srcPath, destPath)`**
-- **描述**：通过路径字符串复制单个文件
-- **参数**：
-  `srcPath` (str)：源文件绝对路径
-  `destPath` (str)：目标保存绝对路径
-- **异常抛出**：IOException 文件读写异常
+## 文本与数据读写
 
-**`copyFile(src, dest)`**
-- **描述**：通过File对象高效复制单个文件
-- **参数**：
-  `src` (File)：源文件对象
-  `dest` (File)：目标文件对象
-- **异常抛出**：IOException 文件不存在/读写异常
+以下方法底层强制采用 **`UTF-8`** 编码，无需担忧乱码问题。方法均支持传入 `File` 对象或直传 `String` 路径。
 
-## 使用示例
+### readText
+
+* **方法签名**: 
+  * `String readText(File file)`
+  * `String readText(String path)`
+* **描述**: 读取并返回目标文件的全部文本内容。若文件不存在则会抛出异常。
+* **示例**:
+  ```java
+  String config = readText(pluginPath + "config.json");
+  print(config);
+  ```
+
+### writeText
+
+* **方法签名**: 
+  * `void writeText(File file, String content)`
+  * `void writeText(String path, String content)`
+* **描述**: 向目标文件写入文本。此操作为**覆盖写入**，如父级目录不存在会自动创建。
+* **示例**:
+  ```java
+  writeText(pluginPath + "cache.txt", "Hello World");
+  ```
+
+### appendText
+
+* **方法签名**: 
+  * `void appendText(File file, String content)`
+  * `void appendText(String path, String content)`
+* **描述**: 在目标文件末尾**追加写入**文本。如父级目录不存在会自动创建。
+* **示例**:
+  ```java
+  appendText(pluginPath + "log.txt", "[INFO] 触发消息回调\n");
+  ```
+
+### readBytes
+
+* **方法签名**: 
+  * `byte[] readBytes(File file)`
+  * `byte[] readBytes(String path)`
+* **描述**: 读取并返回目标文件的全部字节数组。
+* **示例**:
+  ```java
+  byte[] imgData = readBytes(pluginPath + "image.jpg");
+  ```
+
+### writeBytes
+
+* **方法签名**: 
+  * `void writeBytes(File file, byte[] bytes)`
+  * `void writeBytes(String path, byte[] bytes)`
+* **描述**: 将字节数组写入到目标文件中。此操作为**覆盖写入**。
+* **示例**:
+  ```java
+  byte[] data = ...;
+  writeBytes(pluginPath + "output.bin", data);
+  ```
+
+---
+
+## 文件与目录管理
+
+### copyFile
+
+* **方法签名**: 
+  * `void copyFile(File src, File dest)`
+  * `void copyFile(String srcPath, String destPath)`
+* **描述**: 复制单个文件，如果目标文件夹不存在则会自动创建。
+
+### createFile
+
+* **方法签名**: `boolean createFile(String filePath)`
+* **描述**: 安全创建单个空白文件。如果文件或父目录已存在则直接返回 `true`。
+
+### copyDir
+
+* **方法签名**: `void copyDir(File srcDir, File destDir)`
+* **描述**: 递归复制整个目录（含子文件与子目录）。
+
+### deleteFile
+
+* **方法签名**: `boolean deleteFile(File file)`
+* **描述**: 递归删除文件或整个目录，返回操作是否成功。
 
 ```java
 // 删除目录
