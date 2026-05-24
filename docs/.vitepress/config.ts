@@ -53,6 +53,7 @@ export default defineConfig({
           { text: 'Cgi 结构', link: '/cgi-structure' },
           { text: 'Cdn 结构', link: '/cdn-structure' },
           { text: 'DexKit 查找', link: '/dexkit-api' },
+          { text: 'CDN 媒体下载', link: '/cdn-api' },
           { text: 'MCP 工具注册', link: '/mcp-tools' },
         ],
       },
