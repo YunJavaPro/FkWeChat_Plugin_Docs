@@ -6,9 +6,9 @@
 
 ---
 
-## 一、 反射工具类 (ReflectUtils) API
+## 一、 反射工具类
 
-### 1. 类加载器相关 (Class Loaders)
+### 1. 类加载器相关
 
 *   **`Class findClass(String className, ClassLoader classLoader)`**
     *   **描述**：使用指定 ClassLoader 加载 Class。找不到时抛出 `ClassNotFoundException`。
@@ -17,7 +17,7 @@
 
 ---
 
-### 2. 内存安全附加属性 (Meta-Tag 机制)
+### 2. 内存安全附加属性
 允许在不污染原类结构的前提下，为任意 Java 对象实例安全绑定临时属性：
 
 *   **`void setAdditionalField(Object obj, String key, Object value)`**
@@ -27,8 +27,8 @@
 
 ---
 
-### 3. 对象成员字段读操作 (Field Getters)
-支持强行读取实例中的任意私有（private）变量：
+### 3. 对象成员字段读操作
+支持强行读取实例中的任意私有变量：
 
 *   **`Object getObjectField(Object obj, String fieldName)`**
     *   **描述**：读取任意对象类型的成员字段值。
@@ -49,8 +49,8 @@
 
 ---
 
-### 4. 对象成员字段写操作 (Field Setters)
-支持强行修改实例中的任意私有（private）变量：
+### 4. 对象成员字段写操作
+支持强行修改实例中的任意私有变量：
 
 *   **`void setObjectField(Object obj, String fieldName, Object value)`**
     *   **描述**：强行向成员字段写入任意对象值。
@@ -67,7 +67,7 @@
 
 ---
 
-### 5. 静态（Static）字段读写操作
+### 5. 静态字段读写操作
 支持读写类的静态私有变量（首参需传入 `Class<?>` 对象）：
 
 *   **`Object getStaticObjectField(Class clazz, String fieldName)`**
@@ -83,7 +83,7 @@
 
 ---
 
-### 6. 反射寻找器 (Finders)
+### 6. 反射寻找器
 *   **`Field findField(Class clazz, String fieldName)`**
     *   **描述**：在类及其父类中深度检索对应的 `Field` 字段实例。
 *   **`Field findFirstFieldByType(Class clazz, Class type)`**
@@ -101,7 +101,7 @@
 
 ---
 
-### 7. 动态方法执行 (Invocations)
+### 7. 动态方法执行
 *   **`Object callMethod(Object obj, String methodName, Object[] args)`**
     *   **描述**：通过智能参数自动匹配，执行实例对象中的指定方法。
 *   **`Object callMethodExact(Object obj, String methodName, Class[] paramTypes, Object[] args)`**
@@ -113,7 +113,7 @@
 
 ---
 
-### 8. 实例化与数组辅助 (Instantiation & Helpers)
+### 8. 实例化与数组辅助
 *   **`Object newInstance(Class clazz, Object[] args)`**
     *   **描述**：**智能实例化**：自动检索与传入实参最匹配的构造器并创建新实例。
 *   **`Object newInstanceExact(Class clazz, Class[] paramTypes, Object[] args)`**
@@ -125,26 +125,26 @@
 
 ---
 
-## 二、 拦截引擎类 (HookEngine) API
+## 二、 拦截引擎类
 
 ### 1. 基础物理 Member 拦截
 
 *   **`HookHandle hookBefore(Member member, JavaHookCallback callback)`**
     *   **描述**：在目标 Member（Method 或 Constructor）执行前拦截。
 *   **`HookHandle hookBefore(Member member, String id, JavaHookCallback callback)`**
-    *   **描述**：在执行前拦截，并将其注册绑定到指定唯一 String ID。
+    *   **描述**：在执行前拦截，并将其注册绑定 to 指定唯一 String ID。
 *   **`HookHandle hookAfter(Member member, JavaHookCallback callback)`**
     *   **描述**：在目标 Member 执行完毕（即将返回）时拦截。
 *   **`HookHandle hookAfter(Member member, String id, JavaHookCallback callback)`**
-    *   **描述**：在执行后拦截，并将其注册绑定到指定唯一 String ID。
+    *   **描述**：在执行后拦截，并将其注册绑定 to 指定唯一 String ID。
 *   **`HookHandle hookReplace(Member member, JavaHookCallback callback)`**
     *   **描述**：完全替换/接管目标 Member 的执行体，原逻辑将不再执行。
 *   **`HookHandle hookReplace(Member member, String id, JavaHookCallback callback)`**
-    *   **描述**：完全替换目标 Member 的执行体，并绑定到指定唯一 String ID。
+    *   **描述**：完全替换目标 Member 的执行体，并绑定 to 指定唯一 String ID。
 
 ---
 
-### 2. 热重载与卸载 (Hot Reload)
+### 2. 热重载与卸载
 *   **`void replaceHook(String id, JavaHookCallback callback)`**
     *   **描述**：**在线热重载**：无需解除通道绑定重建，直接将已有 ID 上的拦截逻辑覆盖更新为新的回调内容。
 *   **`void unhook(String id)`**
@@ -152,7 +152,7 @@
 
 ---
 
-### 3. 高层快速名拦截 (Shortcuts)
+### 3. 高层快速名拦截
 *   **`HookHandle hookMethodBefore(Class clazz, String methodName, JavaHookCallback callback)`**
     *   **描述**：自动寻找目标类中首个匹配 `methodName` 的方法并在其执行前拦截。
 *   **`HookHandle hookMethodAfter(Class clazz, String methodName, JavaHookCallback callback)`**
@@ -166,7 +166,22 @@
 
 ---
 
-## 三、 回调上下文 `HookParam` 接口
+## 三、 HookHandle 拦截句柄接口
+
+在执行任意 `hook` 拦截函数后，都会向脚本返回一个唯一的 `HookHandle` 对象实例。该实例暴露出以下方法，用于对该拦截点进行精细化的注销还原：
+
+*   **`void unhook()`**
+    *   **描述**：完全撤销并解绑该句柄对象对应的单条 Hook 拦截通道，恢复微信原生逻辑。
+    *   **示例**：
+        ```java
+        var myHook = hookBefore(member, param -> { ... });
+        // 手动安全注销
+        myHook.unhook();
+        ```
+
+---
+
+## 四、 回调上下文 `HookParam` 接口
 
 在拦截回调函数的 `param`（类型为 `HookParam`）中，您拥有对当前拦截点的全权访问：
 
@@ -193,7 +208,7 @@
 
 ---
 
-## 四、 实战场景演练示例
+## 五、 实战场景演练示例
 
 ### 示例 1：利用 `newInstance` 与反射进行链式调用
 在脚本中通过反射创建 Java 内置类，并在控制台打印其最终结果：
@@ -212,7 +227,7 @@ onLoad() {
         callMethod(listInstance, "add", new Object[] { "Comprehensive" });
         callMethod(listInstance, "add", new Object[] { "API" });
 
-        // 4. 调用 getIntField 获取私有元素统计 (假设要读底层私有大小，以 size 为例)
+        // 4. 获取列表大小并打印列表
         int size = callMethod(listInstance, "size", new Object[0]);
         log("列表元素数量: " + size);
         log("最终结果: " + listInstance.toString());
@@ -255,15 +270,60 @@ onLoad() {
 }
 ```
 
-### 示例 3：利用 `skipWith` 安全绕过与 Meta-Tag 绑定
+### 示例 3：利用 `skipWith` 安全篡改微信ID与句柄注销
 
 ```java
+// 用于存储返回的拦截句柄，以便在卸载时执行注销
+var wxidHook;
+
+onLoad() {
+    try {
+        // 1. 动态搜寻微信获取 WXID 的内部配置类
+        Class configLogicClass = findClass("com.tencent.mm.modelbase.ConfigStorageLogic", hostLoader);
+
+        // 2. 定位具体的静态方法
+        java.lang.reflect.Method selfWxidMethod = findMethod()
+            .inClass(configLogicClass.getName())
+            .returnType("java.lang.String")
+            .paramCount(0)
+            .usingNumbers(2)
+            .get();
+
+        // 3. 注册前置拦截，并保存返回的 HookHandle 句柄
+        wxidHook = hookBefore(selfWxidMethod, param -> {
+            String fakeWxid = "wxid_fake_id_2026";
+            
+            // 阻断原方法执行并直接返回我们伪造的值
+            param.skipWith(fakeWxid); 
+            log("[Modify Wxid] 已成功拦截并强行返回伪造 WXID: " + fakeWxid);
+        });
+        
+        log("WXID 拦截篡改通道部署就绪");
+    } catch (Throwable t) {
+        log("WXID 拦截部署失败: " + t.getMessage());
+    }
+}
+
+onUnload() {
+    // 4. 插件卸载或重载时，通过句柄对象调用 .unhook() 彻底注销该拦截点
+    if (wxidHook != null) {
+        wxidHook.unhook();
+        log("[卸载] 已成功安全解绑 WXID 拦截通道");
+    }
+}
+```
+
+### 示例 4：利用 Meta-Tag 机制实现无害化附加属性绑定
+
+```java
+var onResumeHook;
+
 onLoad() {
     try {
         Class launcherCls = findClass("com.tencent.mm.ui.LauncherUI", hostLoader);
         java.lang.reflect.Method onResumeMethod = findMethodExact(launcherCls, "onResume", new Class[0]);
 
-        hookAfter(onResumeMethod, param -> {
+        onResumeHook = hookAfter(onResumeMethod, param -> {
             Object currentActivity = param.getThisObject();
             if (currentActivity == null) return;
 
@@ -279,6 +339,13 @@ onLoad() {
         });
     } catch (Throwable t) {
         log("拦截设置失败: " + t.getMessage());
+    }
+}
+
+onUnload() {
+    if (onResumeHook != null) {
+        onResumeHook.unhook();
+        log("[卸载] 已解绑 LauncherUI 标签监听拦截点");
     }
 }
 ```
